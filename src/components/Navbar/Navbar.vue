@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="nav">
+    <div class="nav" >
       <Today />
       <Yesterday/>
       <Week/>
