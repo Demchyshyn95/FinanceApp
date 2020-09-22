@@ -1,6 +1,6 @@
-import {GET_CURRENCY_TODAY, GOT_CURRENCY,} from "@/store/list/type";
-import axios from 'axios'
+import {GET_CURRENCY_TODAY} from "@/store/list/type";
 import {getDataToComponent} from "@/components/getDataToComponent/getDataToComponent";
+import {serviceApi} from "@/serviceApi/serviceApi";
 
 export const actions = {
 
@@ -16,7 +16,7 @@ export const actions = {
             const {defaultValue} = currencyArray.find(el => el.checked);
             const ziro = '0'
             const data = new Date();
-            const year = data.getFullYear();
+            const day = data.getDate();
             const months = function () {
                 const month = (data.getMonth() + 1).toString()
                 if (month >= 10) {
@@ -25,46 +25,19 @@ export const actions = {
                     return ziro + month
                 }
             }
-            const day = data.getDate();
-            if (el.target.value === 'today') {
-                const fullData = year.toString() + months().toString() + day.toString()
-                const {data} = await axios.get(`https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=${defaultValue}&date=${fullData}&json`);
-                let mapData = new Map();
-                mapData.set(el.target.value, data)
-                commit(GOT_CURRENCY, mapData);
-                {
-                    getDataToComponent(mapData)
-                }
+            const year = data.getFullYear();
 
+            if (el.target.value === 'today') {
+                serviceApi(year,months().toString(),day,defaultValue,el,commit)
             } else if (el.target.value === 'yesterday') {
-                const sevenDaysAgo = year.toString() + months().toString() + (day - 1).toString()
-                const {data} = await axios.get(`https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=${defaultValue}&date=${sevenDaysAgo}&json`);
-                let mapData = new Map();
-                mapData.set(el.target.value, data)
-                commit(GOT_CURRENCY, mapData);
-                {
-                    getDataToComponent(mapData)
-                }
+                serviceApi(year,months().toString(),day,defaultValue,el,commit)
 
             } else if (el.target.value === 'week') {
-                const weekAgo = year.toString() + months().toString() + (day - 7).toString()
-                const {data} = await axios.get(`https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=${defaultValue}&date=${weekAgo}&json`);
-                let mapData = new Map();
-                mapData.set(el.target.value, data)
-                commit(GOT_CURRENCY, mapData);
-                {
-                    getDataToComponent(mapData)
-                }
+                serviceApi(year,months().toString(),day,defaultValue,el,commit)
 
             } else if (el.target.value === 'month') {
-                const monthAgo = year.toString() + months() - 1 + day.toString()
-                const {data} = await axios.get(`https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=${defaultValue}&date=${monthAgo}&json`);
-                let mapData = new Map();
-                mapData.set(el.target.value, data)
-                commit(GOT_CURRENCY, mapData);
-                {
-                    getDataToComponent(mapData)
-                }
+                serviceApi(year,months().toString(),day,defaultValue,el,commit)
+
             }
         }
         else if (!el.target.checked){
