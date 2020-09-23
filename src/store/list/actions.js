@@ -1,10 +1,9 @@
-import {GET_CURRENCY_TODAY} from "@/store/list/type";
-import {getDataToComponent} from "@/components/getDataToComponent/getDataToComponent";
+import {GET_CURRENCY, SET_NEW_STATE} from "@/store/list/type";
 import {serviceApi} from "@/serviceApi/serviceApi";
 
 export const actions = {
 
-    [GET_CURRENCY_TODAY]: async ({commit}, el) => {
+    [GET_CURRENCY]: async ({commit}, el) => {
         const usd = document.getElementById('inlineChecbox1');
         const eur = document.getElementById('inlineChecbox2');
         const rub = document.getElementById('inlineChecbox3');
@@ -41,7 +40,7 @@ export const actions = {
             }
         }
         else if (!el.target.checked){
-            getDataToComponent(el.target.value,'!cheaked',)
+          commit(SET_NEW_STATE,el.target.value)
         }
     }
 }

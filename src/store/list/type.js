@@ -1,7 +1,7 @@
 //ACTIONS
-export const GET_CURRENCY_TODAY = 'GET_CURRENCY_TODAY'
+export const GET_CURRENCY = 'GET_CURRENCY'
 //GETTERS
 export const GET_STATE = 'GET_STATE';
 //MUTATIONS
-export const GOT_CURRENCY = 'GOT_CURRENCY'
-export const RESET_STATE = 'RESET_STATE'
+export const SET_CURRENCY = 'SER_CURRENCY'
+export const SET_NEW_STATE = 'SET_NEW_STATE'
